@@ -1,0 +1,9 @@
+{
+    "TableRestoreList": [
+        {
+            "Schemaname": "ssb",
+            "Tablename": "part"
+        }
+        
+    ]
+}

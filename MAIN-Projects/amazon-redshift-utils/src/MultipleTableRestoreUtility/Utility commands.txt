@@ -1,0 +1,5 @@
+python2.7 multitablerestore.py --target-database-name dev_snap  --source-database-name dev --snapshot-identifier snap --cluster-identifier rs-project --listfile table-list.json
+
+python3 python_v3_multitablerestore.py --target-database-name dev --source-database-name dev --snapshot-identifier snap --cluster-identifier rs-project --listfile example2.json
+
+
