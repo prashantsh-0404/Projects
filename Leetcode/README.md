@@ -1,1 +1,1 @@
-# Leetcode-_HackerRank-_Questions
+# Leetcode Questions
