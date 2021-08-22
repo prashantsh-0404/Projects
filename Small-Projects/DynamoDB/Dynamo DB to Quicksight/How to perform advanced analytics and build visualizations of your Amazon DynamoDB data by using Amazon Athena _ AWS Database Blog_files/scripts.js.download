@@ -1,0 +1,1 @@
+define(function(){"use strict";$.awsComponent={columnBuilder:function(){}}});
