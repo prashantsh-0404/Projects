@@ -1,0 +1,56 @@
+// Settings in here override those in "Default/Preferences.sublime-settings",
+// and are overridden in turn by syntax-specific settings.
+{
+	
+
+ "theme": "Spacegray.sublime-theme",
+ "color_scheme": "Packages/Theme/spacegray-master/base16-ocean.dark.tmTheme",
+
+  "font_size": 26,
+
+
+// Tab labels font size
+// Copy and paste one of four options in your user preferences file:
+
+"spacegray_tabs_font_small": true,
+"spacegray_tabs_font_normal": true,
+"spacegray_tabs_font_large": true,
+"spacegray_tabs_font_xlarge": true,
+
+// Tabs size
+// Tabs height:
+
+"spacegray_tabs_small": true,
+"spacegray_tabs_normal": true,
+"spacegray_tabs_large": true,
+"spacegray_tabs_xlarge": true,
+
+// Tabs width:
+"spacegray_tabs_auto_width": true,
+
+
+// Sidebar labels font size
+"spacegray_sidebar_font_small": true,
+"spacegray_sidebar_font_normal": true,
+"spacegray_sidebar_font_large": true,
+"spacegray_sidebar_font_xlarge": true,
+
+
+// Sidebar tree rows height
+"spacegray_sidebar_tree_xsmall": true,
+"spacegray_sidebar_tree_small": true,
+"spacegray_sidebar_tree_normal": true,
+"spacegray_sidebar_tree_large": true,
+"spacegray_sidebar_tree_xlarge": true,
+"enable_tab_scrolling": false,
+
+
+// Enable sidebar fileicons (only works in Sublime Text 3)
+"spacegray_fileicons": true,
+
+
+// Disable custom OSX Title Bar in Sublime Text 3
+// Useful if you're using native OSX tabs since the custom Title Bar breaks the native tabs
+
+"disable_custom_title_bar": true,
+}
