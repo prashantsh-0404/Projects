@@ -1,0 +1,54 @@
+curl -X POST \
+    -H 'Content-Type: application/json' \
+    https://np-cluster-neptune-nest-instance-1.ch8cuxkb0m2v.us-west-2.neptune.amazonaws.com:8182/loader -d '
+    { 
+      "source" : "s3://projects0404-us-west-2/Neptune/amazon-neptune-samples/gremlin/collaborative-filtering/data", 
+      "iamRoleArn" : "arn:aws:iam::457403320578:role/Neptune-Nest-role",
+      "format" : "csv", 
+      "region" : "us-west-2", 
+      "failOnError" : "TRUE"
+    }'
+
+curl -X POST \
+    -H 'Content-Type: application/json' \
+    https://database-1-instance-1.ch8cuxkb0m2v.us-west-2.neptune.amazonaws.com:8182/loader -d '
+    { 
+      "source" : "s3://projects0404-us-west-2/Neptune/amazon-neptune-samples/gremlin/collaborative-filtering/data", 
+      "iamRoleArn" : "arn:aws:iam::457403320578:role/AWSSupportPatchwork-SSMRoleForInstances",
+      "format" : "csv", 
+      "region" : "us-west-2", 
+      "failOnError" : "TRUE"
+    }'
+
+curl -XGET https://database-1-instance-1.ch8cuxkb0m2v.us-west-2.neptune.amazonaws.com:8182/status
+
+
+----------------------
+
+
+curl -X POST \
+    -H 'Content-Type: application/json' \
+    https://database-1-instance-1.ch8cuxkb0m2v.us-west-2.neptune.amazonaws.com:8182/loader -d '
+    { 
+      "source" : "s3://projects0404-us-west-2/Neptune/amazon-neptune-samples/gremlin/collaborative-filtering/data", 
+      "iamRoleArn" : "arn:aws:iam::457403320578:role/Neptune-Nest-role",
+      "format" : "csv", 
+      "region" : "us-west-2", 
+      "failOnError" : "TRUE"
+    }'
+
+
+
+    "SecretAccessKey": "SuMwZZ/W7oyie83St1j/pZIcF5ExqcHE9AuDeYJV", 
+        "SessionToken": "IQoJb3JpZ2luX2VjENL//////////wEaCXVzLWVhc3QtMSJHMEUCIHaB7tqLxS7zOid6lnhM7xMjMTbfiuWHqcAc3hWHTX1vAiEAmcS+Xl/rPL1irc5OoprGElZgbvP7oVMOoe28QL5pg7sqkQIIKhABGgw0NTc0MDMzMjA1NzgiDEJHKwdm4lKTq421hSruAbWHup1jXXnf+cWJvL5OcLE8xkgGT0t8mdHkRMJnE4g0P0Jdaj86jqe65Q/RlkEiCLhiZIJfg9mZ40MqNGz3w2wC1bnmGPTCHlCoWDxiBPAO2OZ3gz/P87OV2Q4kk97JmrUDvTGmK0vZWQE7H/PzlqZG3Y5pFmMoKEhka1FsAKoc3latRx4bpBfLOmXU7kvi8CHLUOoRNN/yq/pgqKupPUbHdGPodlzlHh0X21s6LzV7it/iatqb9O3FSH4sz0xKt/PEQRWqMSE/mgD5DhYVbnpOFD7uRt9if+ahhR9N4vG1BCHRL+pRDqYeJKEKwOgw+qz8iQY6nQHg/C5zj1+GOBJ6lMV/vdBM916NqpKhxyA0gKLfdtWT3LzLcAw5pGhf6Xbr5wwDl7OzVM91FoqQCteEKVvLQq6Pok3xlHhSowlkBX8Hgk8LXSU6ioVg1TK3Qtm6v0KmXAJmotuJz4PBycWn0qUs7R8p4dTDSDE90bllhHSeW1yORS0tGzhp2ER03ZTJQF5z09mlf0FFvxIlPdBrlOax", 
+        "Expiration": "2021-09-13T10:14:34Z", 
+        "AccessKeyId": "ASIAWU724ZEBNIXAQEE5"
+
+         export aws_Secret_Access_Key = "SuMwZZ/W7oyie83St1j/pZIcF5ExqcHE9AuDeYJV""IQoJb3JpZ2luX2VjENL//////////wEaCXVzLWVhc3QtMSJHMEUCIHaB7tqLxS7zOid6lnhM7xMjMTbfiuWHqcAc3hWHTX1vAiEAmcS+Xl/rPL1irc5OoprGElZgbvP7oVMOoe28QL5pg7sqkQIIKhABGgw0NTc0MDMzMjA1NzgiDEJHKwdm4lKTq421hSruAbWHup1jXXnf+cWJvL5OcLE8xkgGT0t8mdHkRMJnE4g0P0Jdaj86jqe65Q/RlkEiCLhiZIJfg9mZ40MqNGz3w2wC1bnmGPTCHlCoWDxiBPAO2OZ3gz/P87OV2Q4kk97JmrUDvTGmK0vZWQE7H/PzlqZG3Y5pFmMoKEhka1FsAKoc3latRx4bpBfLOmXU7kvi8CHLUOoRNN/yq/pgqKupPUbHdGPodlzlHh0X21s6LzV7it/iatqb9O3FSH4sz0xKt/PEQRWqMSE/mgD5DhYVbnpOFD7uRt9if+ahhR9N4vG1BCHRL+pRDqYeJKEKwOgw+qz8iQY6nQHg/C5zj1+GOBJ6lMV/vdBM916NqpKhxyA0gKLfdtWT3LzLcAw5pGhf6Xbr5wwDl7OzVM91FoqQCteEKVvLQq6Pok3xlHhSowlkBX8Hgk8LXSU6ioVg1TK3Qtm6v0KmXAJmotuJz4PBycWn0qUs7R8p4dTDSDE90bllhHSeW1yORS0tGzhp2ER03ZTJQF5z09mlf0FFvxIlPdBrlOax"
+        "SessionToken": , 
+        "Expiration": "2021-09-13T10:14:34Z", 
+        "AccessKeyId": "ASIAWU724ZEBNIXAQEE5"
+
+export aws_access_key_id= "ASIAWU724ZEBNIXAQEE5"
+export aws_secret_access_key= "SuMwZZ/W7oyie83St1j/pZIcF5ExqcHE9AuDeYJV"
+export aws_session_token= "IQoJb3JpZ2luX2VjENL//////////wEaCXVzLWVhc3QtMSJHMEUCIHaB7tqLxS7zOid6lnhM7xMjMTbfiuWHqcAc3hWHTX1vAiEAmcS+Xl/rPL1irc5OoprGElZgbvP7oVMOoe28QL5pg7sqkQIIKhABGgw0NTc0MDMzMjA1NzgiDEJHKwdm4lKTq421hSruAbWHup1jXXnf+cWJvL5OcLE8xkgGT0t8mdHkRMJnE4g0P0Jdaj86jqe65Q/RlkEiCLhiZIJfg9mZ40MqNGz3w2wC1bnmGPTCHlCoWDxiBPAO2OZ3gz/P87OV2Q4kk97JmrUDvTGmK0vZWQE7H/PzlqZG3Y5pFmMoKEhka1FsAKoc3latRx4bpBfLOmXU7kvi8CHLUOoRNN/yq/pgqKupPUbHdGPodlzlHh0X21s6LzV7it/iatqb9O3FSH4sz0xKt/PEQRWqMSE/mgD5DhYVbnpOFD7uRt9if+ahhR9N4vG1BCHRL+pRDqYeJKEKwOgw+qz8iQY6nQHg/C5zj1+GOBJ6lMV/vdBM916NqpKhxyA0gKLfdtWT3LzLcAw5pGhf6Xbr5wwDl7OzVM91FoqQCteEKVvLQq6Pok3xlHhSowlkBX8Hgk8LXSU6ioVg1TK3Qtm6v0KmXAJmotuJz4PBycWn0qUs7R8p4dTDSDE90bllhHSeW1yORS0tGzhp2ER03ZTJQF5z09mlf0FFvxIlPdBrlOax"
