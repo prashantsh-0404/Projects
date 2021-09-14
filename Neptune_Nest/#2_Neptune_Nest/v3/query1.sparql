@@ -1,0 +1,9 @@
+PREFIX prop: <http://kelvinlawrence.net/air-routes/vocab/prop#> 
+PREFIX airport: <http://kelvinlawrence.net/air-routes/data/airport#> 
+SELECT DISTINCT ?via WHERE {
+  ?route1 prop:from airport:FRA . 
+  ?route1 prop:to ?via . 
+  ?route2 prop:from ?via . 
+  ?route2 prop:to airport:SEA .
+}
+
