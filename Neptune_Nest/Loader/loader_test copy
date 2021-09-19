@@ -1,0 +1,26 @@
+curl -X POST \
+-H 'Content-type: application/json' \
+https://np-cluster-neptune-nest.cluster-ch8cuxkb0m2v.us-west-2.neptune.amazonaws.com:8182/loader -d '
+
+{
+
+"source" : "s3://projects0404-us-west-2/Neptune/tests/air-routes",
+
+"iamRoleArn" : "arn:aws:iam::457403320578:role/Neptune-Nest-role",
+
+"format" : "csv",
+
+"region" : "us-west-2",
+
+"mode" : "AUTO" ,
+
+"failOnError" : "True",
+
+"parallelism" : "HIGH",
+
+"updateSingleCardinalityProperties" : "TRUE",
+
+"queueRequest" : "TRUE"
+
+
+}'
