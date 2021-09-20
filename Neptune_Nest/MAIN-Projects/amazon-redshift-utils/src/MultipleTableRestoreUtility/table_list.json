@@ -1,0 +1,19 @@
+{
+    "TableRestoreList": [
+        {
+            "Schemaname": "ssb",
+            "Tablename": "part"
+        },
+        
+        {
+            "Schemaname": "sample_database",
+            "Tablename": "event"
+        },
+
+        {
+            "Schemaname": "tpc",
+            "Tablename": "nation"
+        }
+        
+    ]
+}

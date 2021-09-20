@@ -1,0 +1,132 @@
+Hello Harini,
+
+Thank you for your patience. I've successfully tested your use case requirement on my end using the easiest feature in Amazon Redshift (introduced recently) - DATA SHARING. With data sharing, you can securely and easily share live data across Amazon Redshift clusters or AWS accounts for read purposes. [1] 
+
+In your case, first we will share the database 'jim' (including schemas &amp; tables) in cluster 'PROD' to cross-account cluster 'PREPROD'. The schemas &amp; tables are shared only for read purposes. Once database shared successfully, you can create local schemas &amp; tables, and copy data from shared external tables.
+
+Please follow the following steps to replicate data from cluster 'PROD' in A/C ID - 450166719139 to cross-account 'PREPROD' in A/C ID - 354819469374. I've linked numbered documents in references section below containing more detailed information on those steps:
+
+
+====================== Considerations & Limitations =========================
+
+a) Amazon Redshift doesn't support sharing data across AWS Regions. In your case, this requirement is already met as both the Redshift clusters are in us-east-1 (N Virginia) region. 
+b) For cross-account data sharing, both the producer and consumer cluster must be encrypted.
+c) There is a two-way handshake required in sharing data across AWS accounts. A producer account administrators authorize consumer accounts to access datashares. To use an authorized datashare, a consumer account administrator associate the datashare with the entire AWS account, authorize it with specific clusters in the consumer account. [1]
+d) Amazon Redshift doesn't support adding external schemas or tables to datashares. These external schemas or tables can be from Amazon S3 data lakes or federated queries.
+
+- Please check any other considerations & limitations (that may apply in your case) in the documents - 
+https://docs.aws.amazon.com/redshift/latest/dg/limitations-datashare.html
+https://docs.aws.amazon.com/redshift/latest/dg/considerations.html
+
+- Following are considerations for controlling cross-account datashare access
+https://docs.aws.amazon.com/redshift/latest/dg/control-access.html
+
+Though data sharing can be done using AWS Console or SQL Interface, separately. For easier implementation, please try to use both AWS Console and SQL Interface as needed. 
+
+
+====================== Steps (using AWS Console) =========================
+
+Kindly use the detailed steps mentioned in Amazon Redshift console to manage datashares created in your account or shared from other accounts. 
+https://docs.aws.amazon.com/redshift/latest/dg/getting-started-datashare-console.html
+
+
+====================== Steps (using SQL Interface =========================
+
+- As a producer cluster administrator or database owner, connect to the database 'jim' and follow these steps: [3]
+https://docs.aws.amazon.com/redshift/latest/dg/across-account.html
+
+1) Create datashares in your cluster and add datashare objects to the datashares. For more information, please read documents CREATE DATASHARE [3.a] and ALTER DATASHARE [3.b]. The following example creates datashare 'jim_shared' &amp; adds different datashare objects to the datashare 'jim_shared':
+
+-- Create datashare in producer cluster's database
+create datashare jim_shared;
+
+-- Add schema to datashare
+ALTER DATASHARE jim_shared ADD SCHEMA &lt;schema-name&gt;;
+
+-- Add table under schema to datashare
+ALTER DATASHARE jim_shared ADD TABLE &lt;schema-name&gt;.&lt;table-name&gt;;
+
+-- Add view to datashare 
+ALTER DATASHARE jim_shared ADD TABLE &lt;schema-name&gt;.&lt;view-name&gt;;;
+
+-- Add all existing tables and views under schema to datashare (does not include future table)
+ALTER DATASHARE jim_shared ADD ALL TABLES in schema public;
+
+2) Delegate permissions to operate on the datashare. 
+GRANT ALTER, SHARE ON DATASHARE jim_shared TO <dbuser>;
+
+3) Add consumers to or remove consumers from datashares. The following example adds the AWS account ID to the SalesShare. Cluster superusers and the owners of datashare objects or users that have SHARE privilege on the datashare can add consumers to or remove consumers from a datashare. 
+GRANT USAGE ON DATASHARE jim_shared TO ACCOUNT '354819469374';
+
+- As a consumer cluster administrator – follow these steps:
+
+4) List the datashares made available to you and view the content of datashares.
+SHOW DATASHARES;
+
+5) Create local databases that reference to the datashares. 
+CREATE DATABASE jim_dev FROM DATASHARE jim_shared OF ACCOUNT '450166719139' NAMESPACE '220515b3-2519-4613-b696-a6b94727c22f ';
+
+6) Create external schemas to refer and assign granular permissions to specific schemas in the consumer database imported on the consumer cluster.
+CREATE EXTERNAL SCHEMA jim_schema FROM REDSHIFT DATABASE 'jim_dev' SCHEMA 'public';
+
+7) Query data in the shared objects in the datashares.
+SELECT * FROM jim_dev.public.<table_name>;
+
+8) You can only use SELECT statements on shared objects. However, you can create tables and views in the consumer cluster by querying the data from the shared objects in a different local database.
+
+--Connect to a local cluster database. Create a table on shared objects and access it. 
+CREATE table <local_table_name> 
+AS SELECT * 
+FROM jim_dev.public.<table_name>
+WITH NO SCHEMA BINDING;
+
+SELECT * FROM <local_table_name>;
+
+
+====================== Schedule a query for Updating and inserting new data in local tables created from shared database 'jim_dev' ​=========================
+
+You can efficiently add new data to an existing table by using a combination of updates and inserts from a staging table. While Amazon Redshift does not support a single merge, or upsert, command to update a table from a single data source, you can perform a merge operation by creating a staging table and then using one of the methods described in this section to update the target table from the staging table.
+
+9) Updating and inserting new data  - 
+https://docs.aws.amazon.com/redshift/latest/dg/t_updating-inserting-using-staging-tables-.html
+
+10) Scheduling a query on the Amazon Redshift console - 
+https://docs.aws.amazon.com/redshift/latest/mgmt/query-editor-schedule-query.html
+
+
+Kindly let us know if you have any more questions. We would be happy to assist. Or you may resolve the case if your queries are answered.
+
+
+====================== References =========================
+
+[1] Sharing data across clusters in Amazon Redshift - 
+https://docs.aws.amazon.com/redshift/latest/dg/datashare-overview.html
+
+[2] Getting started data sharing using the console  - 
+https://docs.aws.amazon.com/redshift/latest/dg/getting-started-datashare-console.html
+
+[3] Sharing data across AWS accounts - 
+https://docs.aws.amazon.com/redshift/latest/dg/across-account.html
+
+[3.a] CREATE DATASHARE - 
+https://docs.aws.amazon.com/redshift/latest/dg/r_CREATE_DATASHARE.html
+
+[3.b] ALTER DATASHARE - 
+https://docs.aws.amazon.com/redshift/latest/dg/r_ALTER_DATASHARE.html
+
+[9] Updating and inserting new data  - 
+https://docs.aws.amazon.com/redshift/latest/dg/t_updating-inserting-using-staging-tables-.html
+
+[10] Scheduling a query on the Amazon Redshift console - 
+https://docs.aws.amazon.com/redshift/latest/mgmt/query-editor-schedule-query.html
+
+
+
+
+
+
+
+
+
+
+

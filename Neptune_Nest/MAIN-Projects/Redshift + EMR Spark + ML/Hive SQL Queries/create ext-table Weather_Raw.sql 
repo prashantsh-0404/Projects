@@ -1,0 +1,30 @@
+CREATE EXTERNAL TABLE IF NOT EXISTS weather_raw (
+  station       string,
+  station_name  string,
+  elevation     string,
+  latitude      string,
+  longitude     string,
+  wdate         string,
+  prcp          decimal(5,1),
+  snow          int,
+  tmax          string,
+  tmin          string,
+  awnd          string
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n'
+LOCATION 's3://projects0404/Spark-Redshift/weather/'
+TBLPROPERTIES("skip.header.line.count"="1");
+
+
+CREATE TABLE weather AS SELECT station, station_name, elevation, latitude, longitude,
+                   cast(concat(
+                                substr(wdate,1,4), '-',
+                                substr(wdate,5,2), '-',
+                                substr(wdate,7,2)
+                              ) AS date) AS dt, prcp, snow, tmax, tmin, awnd FROM weather_raw;
+
+
+
+set hive.cli.print.header=true;
+
+select * from weather limit 10;
